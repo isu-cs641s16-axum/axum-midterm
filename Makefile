@@ -18,3 +18,4 @@ report:
 
 clean:
 	rm -f *.blg *.bbl *.aux *.log *.dvi *.out *.pdf *.snm *.toc *.nav *~
+	rm -f *.fdb_latexmk *.fls

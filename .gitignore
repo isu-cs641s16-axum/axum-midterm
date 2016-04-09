@@ -10,3 +10,6 @@
 *.nav
 *~
 tmp
+*.
+*.fdb_latexmk
+*.fls
