@@ -16,6 +16,9 @@
 \usepackage[english]{babel}
 \usepackage[latin1]{inputenc}
 
+\usepackage{natbib}
+\bibliographystyle{apalike}
+
 \DeclareGraphicsExtensions{.pdf,.jpg,.png}
 \graphicspath{{figures/}}
 
@@ -48,4 +51,8 @@
   \input{summary}
 
   \input{appendix}
+
+  \begin{frame}[allowframebreaks]
+    \bibliography{refs}{}
+  \end{frame}
 \end{document}

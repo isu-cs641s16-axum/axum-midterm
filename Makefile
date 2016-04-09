@@ -6,7 +6,7 @@ BIBTEX = bibtex
 
 all:
 	$(LATEX) $(NAME).tex
-#	$(BIBTEX) $(NAME)
+	$(BIBTEX) $(NAME)
 	$(LATEX) $(NAME).tex
 	$(LATEX) $(NAME).tex
 
