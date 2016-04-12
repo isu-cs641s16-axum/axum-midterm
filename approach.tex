@@ -1,20 +1,17 @@
 \section{Our Approach}
 
-\subsection{Pig Latin Features}
-\begin{frame}{Features}
+\subsection{Core Pig Latin Features}
+\begin{frame}{Core Pig Features}
 \begin{itemize}
-	\item DataFlow Language:
-	\begin{itemize}
-		\item Programmer defines a sequence of statements where each carries out a single 					  data transformation. The output relation of each statement is stored in an  					  identifier to be used later in the program.
-	\end{itemize}
-	\item User Defined Functions:
-	\begin{itemize}
-		\item User defined functions provide the flexibility to perform specialized data 				 	  processing tasks.
-	\end{itemize}
-	\item Abstract Parallelism:
-	\begin{itemize}
-		\item Pig Latin programs are represented a sequential way to define the query 					      statements abstracting away the underlying parallelism performed through the 					  map-reduce tasks.
-	\end{itemize}
+	\item \textbf{Programs specify queries over relations:} Designed to
+	concisely facilitate common data transformation tasks.
+	\item \textbf{Programs manipulate aggregate non-atomic types:} e.g. bags
+	and tuples.
+	\item \textbf{Programs use UDFs from environment.}
+	\item \textbf{Programs specify data flow via statements:} A sequence of
+	statements define dependencies between queries via var assignments and uses.
+	\item \textbf{Programs are parallelizable/distributable:} Part of a long
+	history in data flow and query-oriented programming.
 \end{itemize}
 \end{frame}
 
@@ -23,16 +20,24 @@
 \begin{itemize}
 	\item A Pig Latin program passes through four stages of compilation:
 	\begin{itemize}
-		\item Pig Latin Program
-		\item Logical Plan
-		\item Physical Plan
-		\item Map Reduce Phase
+		\item Logical Plan Formalism (1-1 with Pig Latin Prog)
+		\item Physical Plan Formalism
+		\item Map Reduce Formalism
 	\end{itemize}
-	\item The logical plan is an one-to-one mapping from Pig Latin Program and the in Map-				  Reduces phase is executed by assigning physical operators to corresponding map-				  reduce jobs. So we've started our formalism by defining the calculus for Logical 				  plan and Map-Reduce in terms of Pig Latin programs.
 \end{itemize}
 \end{frame}
 
 \subsection{Formalism for Logical Plan}
+
+\begin{frame}{Formalism for Logical Plan}
+\begin{itemize}
+	\item We have hope to create formalisms at each level which reflect all five
+	core features.
+	\item We present our first attempt of a logical plan grammar and static
+	semantics
+	\item We believe this reflects 4/5 core features.
+\end{itemize}
+\end{frame}
 
 \begin{frame}{Conventions}
 \centering
