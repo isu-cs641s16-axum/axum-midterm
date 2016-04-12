@@ -2,14 +2,12 @@
 
 \subsection{Pig-Latin Compilation}
 \begin{frame}{Pig Latin Compilation}
-\begin{itemize}
-	\item Parser verifies the programs, performs type checking, schema inference
-          and other tasks.
-	\item It outputs a canonical logical plan with one-to-one mapping from each statement to 		  a node in logical plan.
-	\item The logical plan is transformed to a physical plan where each logical operator is       		  simplified to corresponding physical operators.
-	\item Pig assigns each physical operator to MapReduce stages with the goal of reducing   		  the number of reduce stages.
-	
-\end{itemize}
+\begin{enumerate}
+	\item Pig program verification, type checking, schema inference.
+	\item Pig program to logical plan (1-1 mapping).
+	\item Logical plan to physical plan (map to physical operators).
+	\item Physical plan to MapReduce (try to minimize stages).
+\end{enumerate}
 \end{frame}
 
 %\subsection{MapReduce Execution Model}
