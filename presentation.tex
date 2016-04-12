@@ -14,10 +14,9 @@
 \usepackage{amsmath,amsthm, amssymb, latexsym}
 \boldmath
 \usepackage[english]{babel}
-\usepackage[latin1]{inputenc}
-
+\usepackage[utf8]{inputenc}
 \usepackage{natbib}
-\bibliographystyle{apalike}
+\bibliographystyle{plainnat}
 
 \DeclareGraphicsExtensions{.pdf,.jpg,.png}
 \graphicspath{{figures/}}
@@ -32,7 +31,9 @@
     Iowa State University\linebreak
     dwtj@iastate.edu\linebreak
     bkbose@iastate.edu
-}\date[COMS 641]{COMS 641: Data Intensive Languages and Systems - Design and Semantics}
+}
+
+\date[COMS 641]{COMS 641: Data Intensive Languages and Systems - Design and Semantics}
 %\date{Month X, 20XX}
 
 
@@ -51,13 +52,15 @@
 
   \input{intro}
   \input{problem}
+  \input{background}
   \input{approach}
-  \input{evaluation}
+  \input{challenges}
+  \input{relatedwork}
   \input{summary}
-
-  \input{appendix}
 
   \begin{frame}[allowframebreaks]
     \bibliography{refs}{}
+    \bibliographystyle{plainnat}
   \end{frame}
+  \input{appendix}
 \end{document}
