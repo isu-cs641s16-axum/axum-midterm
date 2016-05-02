@@ -41,30 +41,122 @@
 
 \begin{frame}{Conventions}
 \centering
-\includegraphics[scale=0.80]{conventions}
+	\begin{flushleft}
+		T : a type\newline
+		S : a type that satisfies schema type\newline
+		c : an integer to denote column offset\newline
+		x, y : identifiers\newline
+		\textGamma \: : Context\newline
+ 		s : a statement\newline
+ 		q : a term of query form\newline 
+	\end{flushleft}
 \end{frame}
 
-\begin{frame}{Grammar: Queries}
+
+\begin{frame}{Grammar: Schema Types}
 \centering
-\includegraphics[scale=0.60]{query}
+	\begin{flushleft}
+	$ schema\_ty \::= \hfill \textnormal{\emph{Schema Types}}\hfill$\\
+	$ \quad \mid STNil\hfill \textnormal{\emph{Unit Type}}\hfill$\\
+   	$ \quad \mid STConsInt \hfill \textnormal{\emph{Function Type}}\hfill$\\
+     	$ \quad \mid STConsBag \hfill \textnormal{\emph{Predicate Type}}\hfill$\\
+	\end{flushleft}
 \end{frame}
 
-\begin{frame}{Grammar: Statements}
+\begin{frame}{Grammar: UDF Types}
 \centering
-\includegraphics[scale=0.60]{stmnt}
+	\begin{flushleft}
+	$ udf\_ty \::= \hfill \textnormal{\emph{User Defined Types}}\hfill$\\
+	$ \quad \mid UDFTFn\hfill \textnormal{\emph{UDF Function Type}}\hfill$\\
+   	$ \quad \mid UDFTPred \hfill \textnormal{\emph{UDF Predicate Type}}\hfill$\\
+	\end{flushleft}
 \end{frame}
 
-\begin{frame}{Types}
+\begin{frame}{Grammar: Loadable Types}
 \centering
-\includegraphics[scale=0.60]{ty}
+	\begin{flushleft}
+	$ loadable\_ty \::= \hfill \textnormal{\emph{Loadable Types}}\hfill$\\
+	$ \quad \mid LTSchema\hfill \textnormal{\emph{Loadable Schema}}\hfill$\\
+   	$ \quad \mid LTUDF \hfill \textnormal{\emph{Loadable UDF}}\hfill$\\
+	\end{flushleft}
+\end{frame}
+
+\begin{frame}{Grammar: Terms}
+\centering
+	\begin{flushleft}
+	$ tm \::= \hfill \textnormal{\emph{Terms}}\hfill$\\
+	$ \quad \mid t\_filter\hfill \textnormal{\emph{Query Filter}}\hfill$\\
+   	$ \quad \mid t\_foreach \hfill \textnormal{\emph{Query ForEach}}\hfill$\\
+     	$ \quad \mid t\_group \hfill \textnormal{\emph{Query Group}}\hfill$\\
+     	$ \quad \mid t\_join \hfill \textnormal{\emph{Query Join}}\hfill$\\
+     	$ \quad \mid t\_load \hfill \textnormal{\emph{Load Statement}}\hfill$\\
+   	$ \quad \mid t\_assign \hfill \textnormal{\emph{Assignment Statement}}\hfill$\\
+     	$ \quad \mid t\_seq \hfill \textnormal{\emph{Sequence of Statements}}\hfill$\\
+     	$ \quad \mid t\_store \hfill \textnormal{\emph{Store Statement}}\hfill$\\
+	\end{flushleft}
+\end{frame}
+
+\begin{frame}{Grammar: Types}
+\centering
+	\begin{flushleft}
+	$ ty \::= \hfill \textnormal{\emph{Types}}\hfill$\\
+	$ \quad \mid TUnit\hfill \textnormal{\emph{Unit Type}}\hfill$\\
+   	$ \quad \mid TFn \hfill \textnormal{\emph{Function Type}}\hfill$\\
+     	$ \quad \mid TPred \hfill \textnormal{\emph{Predicate Type}}\hfill$\\
+     	$ \quad \mid TNil \hfill \textnormal{\emph{Schema Tuple Terminator}}\hfill$\\
+     	$ \quad \mid TCons \hfill \textnormal{\emph{Schema Tuple Extension}}\hfill$\\
+   	$ \quad \mid TInt \hfill \textnormal{\emph{Atomic Schema Attribute}}\hfill$\\
+     	$ \quad \mid TBag \hfill \textnormal{\emph{Compound Schema Attribute}}\hfill$\\
+	\end{flushleft}
 \end{frame}
 
 \begin{frame}{Typing Rules: Queries}
-\centering
-\includegraphics[scale=0.50]{T_Queries}
+	\begin{mathpar}
+		\inferrule* [Right=\emph{\textbf{T\_Filter}}]
+          		{\Gamma \vdash x = S \\ schema\_ty\: S \\ \Gamma \vdash y = TPred \:S} {\Gamma \vdash t\_filter \:x, y \in S }
+		\hva \and
+		\inferrule* [Right=\emph{\textbf{T\_ForEach}}]
+          		{schema\_ty\: S1 \\ schema\_ty\: S2 \\\\ 
+		\Gamma \vdash x = S1 \\ \Gamma \vdash y = TFn\: S1\:S2} {\Gamma \vdash t\_filter \:x, y \in S }
+	\end{mathpar}
+\end{frame}
+
+\begin{frame}{Typing Rules: ...Queries}
+	\begin{mathpar}
+		\inferrule* [Right=\emph{\textbf{T\_Group}}]
+          		{\Gamma \vdash x = S1 \\\\ schema\_ty\: S1 \\ schema\_ty\: S2 \\\\ schema\_column S1 c = true \\\\ S2 = TCons TInt (TBag S1)} {\Gamma \vdash t\_group \:x  c \in S2 }
+		\hva \and
+		\inferrule* [Right=\emph{\textbf{T\_Join}}]
+          		{schema\_ty\: S1 \\ schema\_ty\: S2 \\\\ 
+		\Gamma \vdash x = S1 \\ \Gamma \vdash y =  S2 \\\\ schema\_column S1 cx = true \\schema\_column S2 cy = true  } {\Gamma \vdash t\_join \:x cx, y cy \in S3 }
+	\end{mathpar}
 \end{frame}
 
 \begin{frame}{Typing Rules: Statements}
 \centering
-\includegraphics[scale=0.40]{T_Statements}
+	\begin{mathpar}
+		\inferrule* [Right=\emph{\textbf{T\_Load}}]
+          		{\Gamma \vdash x = None \\ loadable\_ty\: T} {\Gamma \vdash t\_load \:x T \in TUnit }
+		\hva \and
+		\inferrule* [Right=\emph{\textbf{T\_Assign}}]
+          		{\Gamma \vdash x = None \\ \Gamma \vdash q = S \\schema_ty S} {\Gamma \vdash t\_assign \:x q \in TUnit }
+		\hva \and
+		\inferrule* [Right=\emph{\textbf{T\_Store}}]
+          		{schema\_ty\: S1 \\ schema\_ty\: S2 \\\\ 
+		\Gamma \vdash x = S \\ schema\_ty S} {\Gamma \vdash t\_store \:x \in TUnit }
+	\end{mathpar}
+\end{frame}
+
+\begin{frame}{Typing Rules: ...Statements}
+	\begin{mathpar}
+		\inferrule* [Right=\emph{\textbf{T\_SeqLoad}}]
+          		{s1 = t\_load x T \\Gamma \vdash s1 \in TUnit \\ \Gamma, x:T \vdash s2 \in TUnit } {\Gamma \vdash t\_seq \:s1 s2 \in TUnit }
+		\hva \and
+		\inferrule* [Right=\emph{\textbf{T\_SeqAssign}}]
+          		{s1 = t\_store x \\ schema\_ty S \\\\\Gamma \vdash x = S \\ \Gamma \vdash s1 \in TUnit \\ \Gamma \vdash s2 \in TUnit} {\Gamma \vdash t\_seq \:s1 s2 \in TUnit }
+		\hva \and
+		\inferrule* [Right=\emph{\textbf{T\_SeqStore}}]
+          		{s1 = t\_store x \\ \Gamma \vdash x = S \\ schema\_ty\: S  \\\\ 
+		\Gamma \vdash s1 \in TUnit \\ \Gamma \vdash s2 \in TUnit } {\Gamma \vdash t\_seq \:s1 s2 \in TUnit }
+	\end{mathpar}
 \end{frame}

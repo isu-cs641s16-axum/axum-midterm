@@ -13,3 +13,4 @@ tmp
 *.
 *.fdb_latexmk
 *.fls
+*.gz
